@@ -11,9 +11,15 @@
   <main class="container">
     <h1>TRIBAL IS COMING FOR YOU</h1>
 
-    <form method="POST" action="https://script.google.com/macros/s/AKfycbyRR2Spg97Yl5umF69Wfu3GBb57WyX0ObeeHLV9omWfyn9SSND2UkqhobLa_UoBl16U/exec">
-      <input type="email" name="email" placeholder="Enter your mail" required>
-      
+    <form id="signupForm">
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="Enter your mail"
+        required
+      >
+
       <p class="consent">
         <!-- Paste EXACT consent wording from existing website here -->
       </p>
@@ -21,6 +27,47 @@
       <button type="submit">Notify Me</button>
     </form>
   </main>
+
+  <!-- Success message -->
+  <div id="successToast">✓ Successfully submitted</div>
+
+  <script>
+    const form = document.getElementById("signupForm");
+    const emailInput = document.getElementById("email");
+    const successToast = document.getElementById("successToast");
+
+    const SCRIPT_URL =
+      "https://script.google.com/macros/s/AKfycbyRR2Spg97Yl5umF69Wfu3GBb57WyX0ObeeHLV9omWfyn9SSND2UkqhobLa_UoBl16U/exec";
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault(); // stop redirect
+
+      fetch(SCRIPT_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: "email=" + encodeURIComponent(emailInput.value),
+      })
+        .then((res) => res.text())
+        .then((text) => {
+          if (text.includes("Success")) {
+            emailInput.value = ""; // clear input
+            showSuccess();
+          }
+        })
+        .catch(() => {
+          alert("Submission failed. Please try again.");
+        });
+    });
+
+    function showSuccess() {
+      successToast.style.display = "block";
+      setTimeout(() => {
+        successToast.style.display = "none";
+      }, 3000);
+    }
+  </script>
 
 </body>
 </html>
