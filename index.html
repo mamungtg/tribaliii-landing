@@ -6,76 +6,125 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="assets/style.css">
 </head>
+
 <body>
 
-  <main class="container">
-    <h1>TRIBAL IS COMING FOR YOU</h1>
+<main class="container">
+  <h1>TRIBAL IS COMING FOR YOU</h1>
 
-<form id="signupForm">
-  <input
-    type="email"
-    id="email"
-    name="email"
-    placeholder="Enter your email"
-    required
-  >
+  <form id="signupForm">
 
-  <p class="consent">
-    BY ENTERING MY EMAIL I GIVE TRIBAL III INC. ALSO KNOWN AS TRIBAL III,
-    TRIBAL, TRIBALIII.COM AND TRIBALTHREE.COM EXPRESS WRITTEN PERMISSION
-    TO CONTACT ME AT THE EMAIL AND PHONE NUMBER VIA EMAIL, PHONE, TEXT
-    MESSAGE (SMS/MMS) AND/OR CELL PHONE (INCLUDING USE OF AUTOMATED
-    DIALING EQUIPMENT AND PRE-RECORDED CALLS AND/OR MESSAGES). THIS
-    CONSENT IS NOT A CONDITION OF RECEIVING SERVICES.
-  </p>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      placeholder="Enter your email"
+      required
+    >
 
-  <button type="submit" class="grow-btn">
-    GROW
-  </button>
-</form>
+    <!-- Consent text -->
+    <div class="consent">
+      <p>
+        By providing my contact information, I give
+        <strong>TRIBAL III INC.</strong> (also known as TRIBAL III, TRIBAL,
+        TRIBALIII.COM, and TRIBALTHREE.COM) permission to contact me using
+        the email address and/or phone number I provide. This may include
+        email, phone calls, and text messages (SMS/MMS), including
+        automated or prerecorded messages where permitted by law.
+      </p>
 
-  </main>
+      <p>
+        This consent is not a condition of purchasing or receiving services.
+      </p>
+    </div>
 
-  <!-- Success message -->
-  <div id="successToast">✓ Successfully submitted</div>
+    <!-- Required checkboxes -->
+    <div class="checkbox-group">
 
-  <script>
-    const form = document.getElementById("signupForm");
-    const emailInput = document.getElementById("email");
-    const successToast = document.getElementById("successToast");
+      <label>
+        <input type="checkbox" id="ageConsent" required>
+        I confirm that I am at least 18 years old, or I am a parent or legal
+        guardian providing consent.
+      </label>
 
-    const SCRIPT_URL =
-      "https://script.google.com/macros/s/AKfycbyRR2Spg97Yl5umF69Wfu3GBb57WyX0ObeeHLV9omWfyn9SSND2UkqhobLa_UoBl16U/exec";
+      <label>
+        <input type="checkbox" id="policyConsent" required>
+        I agree to the
+        <a href="/terms.html" target="_blank">Terms & Conditions</a> and
+        <a href="/privacy.html" target="_blank">Privacy Policy</a>.
+      </label>
 
-    form.addEventListener("submit", function (e) {
-      e.preventDefault(); // stop redirect
+      <label>
+        <input type="checkbox" id="cookieConsent" required>
+        I accept the use of cookies as described in the
+        <a href="/cookies.html" target="_blank">Cookie Policy</a>.
+      </label>
 
-      fetch(SCRIPT_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: "email=" + encodeURIComponent(emailInput.value),
-      })
-        .then((res) => res.text())
-        .then((text) => {
-          if (text.includes("Success")) {
-            emailInput.value = ""; // clear input
-            showSuccess();
-          }
-        })
-        .catch(() => {
-          alert("Submission failed. Please try again.");
-        });
-    });
+    </div>
 
-    function showSuccess() {
-      successToast.style.display = "block";
-      setTimeout(() => {
-        successToast.style.display = "none";
-      }, 3000);
+    <button type="submit" class="grow-btn">
+      GROW
+    </button>
+
+  </form>
+</main>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <nav>
+    <a href="/terms.html">Terms</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/cookies.html">Cookies</a>
+    <a href="/accessibility.html">Accessibility</a>
+  </nav>
+</footer>
+
+<!-- Success message -->
+<div id="successToast">Successfully submitted</div>
+
+<script>
+  const form = document.getElementById("signupForm");
+  const emailInput = document.getElementById("email");
+  const successToast = document.getElementById("successToast");
+
+  const SCRIPT_URL =
+    "https://script.google.com/macros/s/AKfycbyRR2Spg97Yl5umF69Wfu3GBb57WyX0ObeeHLV9omWfyn9SSND2UkqhobLa_UoBl16U/exec";
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
     }
-  </script>
+
+    fetch(SCRIPT_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: "email=" + encodeURIComponent(emailInput.value),
+    })
+      .then((res) => res.text())
+      .then((text) => {
+        if (text.includes("Success")) {
+          emailInput.value = "";
+          form.reset();
+          showSuccess();
+        }
+      })
+      .catch(() => {
+        alert("Submission failed. Please try again.");
+      });
+  });
+
+  function showSuccess() {
+    successToast.style.display = "block";
+    setTimeout(() => {
+      successToast.style.display = "none";
+    }, 3000);
+  }
+</script>
 
 </body>
 </html>
