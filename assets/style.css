@@ -116,7 +116,8 @@ button {
 
 /* Hover glow */
 .grow-btn:hover {
-  filter: brightness(1.05);
+  filter: brightness(1.08);
+  transform: translateY(-1px);
 }
 /* Checkbox group */
 .checkbox-group {
