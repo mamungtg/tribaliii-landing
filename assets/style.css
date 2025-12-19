@@ -118,3 +118,68 @@ button {
 .grow-btn:hover {
   filter: brightness(1.05);
 }
+/* Checkbox group */
+.checkbox-group {
+  margin: 12px 0 18px;
+  text-align: left;
+  font-size: 11px;
+  color: #bfbfbf;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+  margin-top: 2px;
+  accent-color: #d4af37; /* gold */
+  cursor: pointer;
+}
+
+.checkbox-group a {
+  color: #d4af37;
+  text-decoration: underline;
+}
+
+.checkbox-group a:hover {
+  opacity: 0.85;
+}
+
+/* Footer */
+.site-footer {
+  position: fixed;
+  bottom: 16px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 11px;
+  color: #777;
+}
+
+.site-footer nav {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+}
+
+.site-footer a {
+  color: #777;
+  text-decoration: none;
+}
+
+.site-footer a:hover {
+  color: #d4af37;
+  text-decoration: underline;
+}
+
+/* Accessibility focus (keyboard users) */
+input:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #d4af37;
+  outline-offset: 2px;
+}
