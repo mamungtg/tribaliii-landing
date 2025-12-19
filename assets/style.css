@@ -120,7 +120,7 @@ button {
 }
 /* Checkbox group */
 .checkbox-group {
-  margin: 12px 0 18px;
+  margin: 18px auto 24px;
   text-align: left;
   font-size: 11px;
   color: #bfbfbf;
@@ -182,4 +182,9 @@ button:focus-visible,
 a:focus-visible {
   outline: 2px solid #d4af37;
   outline-offset: 2px;
+}
+.consent {
+  max-width: 360px;
+  margin-left: auto;
+  margin-right: auto;
 }
