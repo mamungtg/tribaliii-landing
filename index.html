@@ -5,6 +5,7 @@
   <title>TRIBAL IS COMING FOR YOU</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/compliance.css">
 </head>
 
 <body>
@@ -21,7 +22,21 @@
       placeholder="Enter your email"
       required
     >
+	<!-- Tiny consent checkboxes (above permission text) -->
+	<div class="checkbox-group tiny">
 
+		<label>
+			<input type="checkbox" required>
+			I am 18+ or have parent/guardian consent
+		</label>
+    
+
+		<label>
+			<input type="checkbox" required>
+			I agree to the
+			<a href="/terms.html">Terms & Policies</a>
+		</label>
+    </div>
     <!-- Consent text -->
     <div class="consent">
       <p>
@@ -36,30 +51,6 @@
       <p>
         This consent is not a condition of purchasing or receiving services.
       </p>
-    </div>
-
-    <!-- Required checkboxes -->
-    <div class="checkbox-group">
-
-      <label>
-        <input type="checkbox" id="ageConsent" required>
-        I confirm that I am at least 18 years old, or I am a parent or legal
-        guardian providing consent.
-      </label>
-
-      <label>
-        <input type="checkbox" id="policyConsent" required>
-        I agree to the
-        <a href="/terms.html" target="_blank">Terms & Conditions</a> and
-        <a href="/privacy.html" target="_blank">Privacy Policy</a>.
-      </label>
-
-      <label>
-        <input type="checkbox" id="cookieConsent" required>
-        I accept the use of cookies as described in the
-        <a href="/cookies.html" target="_blank">Cookie Policy</a>.
-      </label>
-      
     </div>
 
     <button type="submit" class="grow-btn">
