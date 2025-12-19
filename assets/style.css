@@ -224,3 +224,10 @@ a:focus-visible {
   outline: 2px solid #d4af37;
   outline-offset: 3px;
 }
+.accessibility-icon {
+  opacity: 0.85;
+}
+
+.accessibility-icon:hover {
+  opacity: 1;
+}
