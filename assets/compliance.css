@@ -45,3 +45,27 @@
 .grow-btn {
   margin-top: 12px;
 }
+
+
+/* start of Accessibility */
+
+.accessibility-section {
+  margin-top: 48px;
+}
+
+.accessibility-section h2 {
+  margin-bottom: 12px;
+}
+
+.accessibility-section h3 {
+  margin-top: 24px;
+  margin-bottom: 8px;
+}
+
+.accessibility-section p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #ddd;
+}
+
+/* end of Accessibility */
