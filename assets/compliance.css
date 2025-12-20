@@ -69,3 +69,12 @@
 }
 
 /* end of Accessibility */
+
+/* =========================
+   Highlighted Legal Headings
+   ========================= */
+
+.legal-highlight {
+  color: #d4af37; /* gold */
+  font-weight: 700;
+}
