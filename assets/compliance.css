@@ -22,34 +22,14 @@
   margin-top: 1px;
 }
 
-
 /* =========================
-   Footer (All Pages)
+   Footer (Compliance Layer)
    ========================= */
-
-.site-footer {
-  padding: 24px 0;
-  margin-top: 48px;
-  text-align: center;
-  font-size: 11px;
-  color: #777;
-  border-top: 1px solid #111;
-}
+/* Footer layout is defined in style.css
+   This file only provides compliance-level polish */
 
 .site-footer nav {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-}
-
-.site-footer a {
-  color: #777;
-  text-decoration: none;
-}
-
-.site-footer a:hover {
-  color: #d4af37;
-  text-decoration: underline;
+  flex-wrap: wrap;
 }
 
 /* =========================
