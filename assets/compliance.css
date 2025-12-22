@@ -78,3 +78,42 @@
   color: #d4af37; /* gold */
   font-weight: 700;
 }
+
+/* =========================
+   Home Popup (Terms Page)
+   ========================= */
+
+.home-popup {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+}
+
+.home-popup-btn {
+  background: #ffffff;
+  color: #000;
+  border: 1px solid #ccc;
+  padding: 10px 16px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+.home-popup-btn:hover {
+  background: #f5f5f5;
+}
+
+/* Accessibility */
+.home-popup-btn:focus-visible {
+  outline: 2px solid #d4af37;
+  outline-offset: 2px;
+}
+
+
+<script>
+  function goHome() {
+    window.location.href = "/";
+  }
+</script>
