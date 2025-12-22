@@ -131,6 +131,21 @@
     }, 3000);
   }
 </script>
+<!-- UserWay config MUST be before loader -->
+<script>
+  window._userway_config = {
+    position: 'bottom-right',
+    offset: {
+      vertical: 20,
+      horizontal: 20
+    }
+  };
+</script>
+
+<script>
+!function(){ /* your existing UserWay loader script */ }();
+</script>
+
 <script>
   (function(d){
     var s = d.createElement("script");
