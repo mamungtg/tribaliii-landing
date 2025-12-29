@@ -276,5 +276,72 @@
   }
 </script>
 
+<!-- Accessibility -->
+<script>
+  const form = document.getElementById("signupForm");
+  const emailInput = document.getElementById("email");
+  const successToast = document.getElementById("successToast");
+
+  const SCRIPT_URL =
+    "https://script.google.com/macros/s/AKfycbyRR2Spg97Yl5umF69Wfu3GBb57WyX0ObeeHLV9omWfyn9SSND2UkqhobLa_UoBl16U/exec";
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    fetch(SCRIPT_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: "email=" + encodeURIComponent(emailInput.value),
+    })
+      .then((res) => res.text())
+      .then((text) => {
+        if (text.includes("Success")) {
+          emailInput.value = "";
+          form.reset();
+          showSuccess();
+        }
+      })
+      .catch(() => {
+        alert("Submission failed. Please try again.");
+      });
+  });
+
+  function showSuccess() {
+    successToast.style.display = "block";
+    setTimeout(() => {
+      successToast.style.display = "none";
+    }, 3000);
+  }
+</script>
+<!-- UserWay config MUST be before loader -->
+<script>
+  window._userway_config = {
+    position: 'bottom-right',
+    offset: {
+      vertical: 20,
+      horizontal: 20
+    }
+  };
+</script>
+
+<script>
+!function(){ /* your existing UserWay loader script */ }();
+</script>
+
+<script>
+  (function(d){
+    var s = d.createElement("script");
+    s.setAttribute("data-account", "YOUR_WIDGET_ID");
+    s.src = "https://cdn.userway.org/widget.js";
+    (d.body || d.head).appendChild(s);
+  })(document);
+</script>
 </body>
 </html>
