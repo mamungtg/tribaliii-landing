@@ -126,3 +126,11 @@
     window.location.href = "/";
   }
 </script>
+
+
+/* Ensure large CTA never touches footer on small screens */
+@media (max-height: 700px) {
+  .grow-btn {
+    margin-bottom: 48px;
+  }
+}
