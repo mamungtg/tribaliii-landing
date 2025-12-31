@@ -32,6 +32,12 @@
   flex-wrap: wrap;
 }
 
+.site-footer {
+  position: relative;
+  margin-top: 40px;
+}
+
+
 /* =========================
    Minor Compliance Polish
    ========================= */
