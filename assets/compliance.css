@@ -3,25 +3,24 @@
    ========================= */
 
 .checkbox-group.tiny {
-  font-size: 11px;          /* checkbox text size */
+  font-size: 11px;
   color: #cfcfcf;
-  max-width: 340px;
-  margin: 10px auto 10px;
+  margin: 10px 0;
 }
 
 .checkbox-group.tiny label {
   display: flex;
-  align-items: center;      /* key fix: vertical alignment */
+  align-items: center;
   gap: 8px;
-  margin-bottom: 6px;
   line-height: 1.4;
   cursor: pointer;
 }
 
 .checkbox-group.tiny input {
-  transform: scale(0.75);   /* slightly clearer on mobile */
+  transform: scale(0.75);
   margin-top: 1px;
 }
+
 
 /* Permission / legal text below checkboxes */
 .permission-text {
