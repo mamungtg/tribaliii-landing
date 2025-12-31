@@ -3,24 +3,35 @@
    ========================= */
 
 .checkbox-group.tiny {
-  font-size: 9px;
-  color: #9a9a9a;
+  font-size: 11px;          /* checkbox text size */
+  color: #cfcfcf;
   max-width: 340px;
-  margin: 6px auto 10px;
+  margin: 10px auto 10px;
 }
 
 .checkbox-group.tiny label {
   display: flex;
-  gap: 6px;
-  margin-bottom: 4px;
-  line-height: 1.3;
+  align-items: center;      /* key fix: vertical alignment */
+  gap: 8px;
+  margin-bottom: 6px;
+  line-height: 1.4;
   cursor: pointer;
 }
 
 .checkbox-group.tiny input {
-  transform: scale(0.7);
+  transform: scale(0.75);   /* slightly clearer on mobile */
   margin-top: 1px;
 }
+
+/* Permission / legal text below checkboxes */
+.permission-text {
+  font-size: 9px;           /* smaller than checkbox text */
+  line-height: 1.5;
+  color: #9a9a9a;
+  max-width: 360px;
+  margin: 12px auto 0;
+}
+
 
 /* =========================
    Footer (Compliance Layer)
