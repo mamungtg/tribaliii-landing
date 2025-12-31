@@ -129,8 +129,9 @@
 
 
 /* Ensure large CTA never touches footer on small screens */
-@media (max-height: 700px) {
+@media (max-width: 768px) {
   .grow-btn {
-    margin-bottom: 48px;
+    margin-bottom: 140px;
   }
 }
+
