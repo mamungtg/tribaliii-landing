@@ -93,7 +93,7 @@
   const successToast = document.getElementById("successToast");
 
   const SCRIPT_URL =
-    "https://script.google.com/macros/s/AKfycbyRR2Spg97Yl5umF69Wfu3GBb57WyX0ObeeHLV9omWfyn9SSND2UkqhobLa_UoBl16U/exec";
+    "https://tribal-ip-proxy.tribaloperations.workers.dev";
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -118,15 +118,10 @@
       },
       body: formData.toString(),
     })
-      .then(res => res.text())
-      .then(text => {
-        if (text.includes("Success")) {
-          form.reset();
-          showSuccess();
-        } else {
-          alert("Submission failed. Please try again.");
-        }
-      })
+.then(text => {
+  alert(text); // TEMP: shows response source
+})
+
       .catch(() => {
         alert("Submission failed. Please try again.");
       });
