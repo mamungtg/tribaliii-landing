@@ -10,16 +10,40 @@
 
 .checkbox-group.tiny label {
   display: flex;
-  align-items: center;
+  align-items: flex-start;   /* FIX: top-align for long text */
   gap: 8px;
   line-height: 1.4;
   cursor: pointer;
+  margin-bottom: 6px;
+  text-align: left;
 }
 
-.checkbox-group.tiny input {
-  transform: scale(0.75);
-  margin-top: 1px;
+.checkbox-group.tiny input[type="checkbox"] {
+  transform: scale(0.85);   /* FIX: less tiny, more intentional */
+  margin-top: 3px;          /* FIX: align with first text line */
+  flex-shrink: 0;
 }
+
+/* Permission / legal text (legacy – safe to keep if unused) */
+.permission-text {
+  font-size: 9px;
+  line-height: 1.5;
+  color: #9a9a9a;
+  max-width: 360px;
+  margin: 12px auto 0;
+}
+
+/* Email consent block */
+.checkbox-group.tiny .email-consent {
+  margin-top: 6px;
+}
+
+.checkbox-group.tiny .email-consent span {
+  display: block;
+  max-width: 420px;         /* FIX: cleaner line length */
+  opacity: 0.95;
+}
+
 
 
 /* Permission / legal text below checkboxes */

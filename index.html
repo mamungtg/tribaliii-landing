@@ -15,13 +15,9 @@
 
   <form id="signupForm">
 
-    <input
-      type="email"
-      id="email"
-      name="email"
-      placeholder="Enter your email"
-      required
-    >
+    <input type="email" id="email" name="email" placeholder="Enter your email" required >
+	<input type="hidden" name="timestamp" id="timestamp">
+	<input type="hidden" name="user_agent" id="user_agent">
 	<!-- Tiny consent checkboxes (above permission text) -->
 <div class="form-wrap">
 
@@ -45,14 +41,27 @@
         All Cookies.
       </a>
     </label>
+	
+	<label class="email-consent">
+  <input type="checkbox" name="consent_checkbox" required>
+  <span>
+    By submitting your email address, you consent to receive email communications
+    only from TRIBAL III Inc. regarding updates, announcements, events, and related
+    opportunities.<br>
+    No phone calls or text messages.<br>
+    You may unsubscribe at any time by clicking the “unsubscribe” link included in
+    every email.
+  </span>
+</label>
+
   </div>
 
-  <!-- Consent text -->
+  <!-- Consent text 
   <div class="consent">
     <p class="permission-text">
       This is my email. By entering my email, I give TRIBAL III INC., also known as TRIBAL III, TRIBAL, TRIBALIII.COM, and TRIBALTHREE.COM, express written permission to contact me at the email address and phone number I provide via email, phone calls, text messages (SMS/MMS), and/or cellular phone, including the use of automated dialing systems and prerecorded messages any day/ time.
     </p>
-  </div>
+  </div> -->
 
 </div>
 
@@ -86,6 +95,8 @@
 <!-- Success message -->
 <div id="successToast">Successfully submitted</div>
 
+<script src="https://www.google.com/recaptcha/api.js?render=6LdDTj4sAAAAAK4Mvik32d2Jljf87pDxAwoMx32f"></script>
+
 <script>
   const form = document.getElementById("signupForm");
   const emailInput = document.getElementById("email");
@@ -94,33 +105,56 @@
   const SCRIPT_URL =
     "https://script.google.com/macros/s/AKfycbyRR2Spg97Yl5umF69Wfu3GBb57WyX0ObeeHLV9omWfyn9SSND2UkqhobLa_UoBl16U/exec";
 
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
 
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      return;
-    }
+  if (!form.checkValidity()) {
+    form.reportValidity();
+    return;
+  }
 
-    fetch(SCRIPT_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: "email=" + encodeURIComponent(emailInput.value),
-    })
-      .then((res) => res.text())
-      .then((text) => {
-        if (text.includes("Success")) {
-          emailInput.value = "";
-          form.reset();
-          showSuccess();
-        }
-      })
-      .catch(() => {
-        alert("Submission failed. Please try again.");
+  // Populate audit fields
+  document.getElementById("timestamp").value = new Date().toISOString();
+  document.getElementById("user_agent").value = navigator.userAgent;
+
+  grecaptcha.ready(function () {
+    grecaptcha.execute("6LdDTj4sAAAAAK4Mvik32d2Jljf87pDxAwoMx32f", { action: "signup" })
+      .then(function (token) {
+        submitForm(token);
       });
   });
+});
+
+function submitForm(recaptchaToken) {
+  const formData = new URLSearchParams();
+
+  formData.append("email", emailInput.value);
+  formData.append("timestamp", document.getElementById("timestamp").value);
+  formData.append("user_agent", document.getElementById("user_agent").value);
+  formData.append("captcha_token", recaptchaToken);
+  formData.append("consent_checkbox", "true");
+
+  fetch(SCRIPT_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: formData.toString(),
+  })
+    .then(res => res.text())
+    .then(text => {
+      if (text.includes("Success")) {
+        emailInput.value = "";
+        form.reset();
+        showSuccess();
+      } else {
+        alert("Verification failed. Please try again.");
+      }
+    })
+    .catch(() => {
+      alert("Submission failed. Please try again.");
+    });
+}
 
   function showSuccess() {
     successToast.style.display = "block";
