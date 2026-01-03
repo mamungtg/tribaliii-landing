@@ -95,7 +95,7 @@
 <!-- Success message --->
 <div id="successToast">Successfully submitted</div>
 
-<script src="https://www.google.com/recaptcha/api.js?render=6LdDTj4sAAAAAK4Mvik32d2Jljf87pDxAwoMx32f"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6Lcayz4sAAAAAFJKD_gtaVzvBdXWnNRBj5KX3B"></script>
 
 <script>
   const form = document.getElementById("signupForm");
@@ -118,10 +118,11 @@ form.addEventListener("submit", function (e) {
   document.getElementById("user_agent").value = navigator.userAgent;
 
   grecaptcha.ready(function () {
-    grecaptcha.execute("6LdDTj4sAAAAAK4Mvik32d2Jljf87pDxAwoMx32f", { action: "signup" })
-      .then(function (token) {
-        submitForm(token);
-      });
+  grecaptcha.execute(
+    "6Lcayz4sAAAAAFJKD_gtaVzvBdXWnNRBj5KX3B",
+    { action: "signup" }
+  ).then(function (token) {
+    submitForm(token);
   });
 });
 
