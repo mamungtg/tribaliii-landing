@@ -22,68 +22,69 @@
       placeholder="Enter your email"
       required
     >
-	<!-- Tiny consent checkboxes (above permission text) -->
-<div class="form-wrap">
 
-  <!-- Email input (already exists above this, just keep it inside form-wrap) -->
-  <!-- <input type="email" ... > -->
+    <input type="hidden" id="timestamp" name="timestamp">
+    <input type="hidden" id="user_agent" name="user_agent">
 
-  <div class="checkbox-group tiny">
-    <label>
-      <input type="checkbox" required>
-      I am 18+.
-    </label>
+    <div class="form-wrap">
 
-    <label>
-      <input type="checkbox" required>
-      I agree to the
-      <a href="/terms.html" target="_blank" rel="noopener noreferrer">
-        Terms &amp; Policies
-      </a>
-      including
-      <a href="/terms.html#cookies" target="_blank" rel="noopener noreferrer">
-        All Cookies.
-      </a>
-    </label>
-  </div>
+      <div class="checkbox-group tiny">
+        <label>
+          <input type="checkbox" required>
+          I am 18+.
+        </label>
 
-  <!-- Consent text -->
-  <div class="consent">
-    <p class="permission-text">
-      This is my email. By entering my email, I give TRIBAL III INC., also known as TRIBAL III, TRIBAL, TRIBALIII.COM, and TRIBALTHREE.COM, express written permission to contact me at the email address and phone number I provide via email, phone calls, text messages (SMS/MMS), and/or cellular phone, including the use of automated dialing systems and prerecorded messages any day/ time.
-    </p>
-  </div>
+        <label>
+          <input type="checkbox" required>
+          I agree to the
+          <a href="/terms.html" target="_blank" rel="noopener noreferrer">
+            Terms &amp; Policies
+          </a>
+          including
+          <a href="/terms.html#cookies" target="_blank" rel="noopener noreferrer">
+            All Cookies.
+          </a>
+        </label>
 
-</div>
+        <label class="email-consent">
+          <input type="checkbox" required>
+          <span>
+            By submitting your email address, you consent to receive email
+            communications only from TRIBAL III Inc. regarding updates,
+            announcements, events, and related opportunities.
+            <br>
+            No phone calls or text messages.
+            <br>
+            You may unsubscribe at any time by clicking the “unsubscribe” link
+            included in every email.
+          </span>
+        </label>
+      </div>
 
+    </div>
 
-    <button type="submit" class="grow-btn">
-      GROW
-    </button>
+    <button type="submit" class="grow-btn">GROW</button>
+
   </form>
 </main>
 
-<!-- Footer -->
 <footer class="site-footer">
   <nav>
     <a href="/terms.html" target="_blank" rel="noopener noreferrer">
       Terms &amp; Policies
     </a>
-
     <a href="/terms.html#cookies" target="_blank" rel="noopener noreferrer">
       Cookies
     </a>
-
     <a href="/terms.html#accessibility" target="_blank" rel="noopener noreferrer">
       Accessibility
     </a>
   </nav>
 
+  <div>This site collects email addresses only. No SMS or phone calls. Unsubscribe anytime.</div>
   <div>© 2025 Tribal. All rights reserved.</div>
 </footer>
 
-
-<!-- Success message -->
 <div id="successToast">Successfully submitted</div>
 
 <script>
@@ -92,7 +93,7 @@
   const successToast = document.getElementById("successToast");
 
   const SCRIPT_URL =
-    "https://script.google.com/macros/s/AKfycbzpgUEsGWUn-F4o8xJC__tjodD7Mf3wkO-y_ue4w967AvNh1tcvBJvcHCyY_NIJ5T9c/exec";
+    "https://script.google.com/macros/s/AKfycbyRR2Spg97Yl5umF69Wfu3GBb57WyX0ObeeHLV9omWfyn9SSND2UkqhobLa_UoBl16U/exec";
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -102,19 +103,28 @@
       return;
     }
 
+    document.getElementById("timestamp").value = new Date().toISOString();
+    document.getElementById("user_agent").value = navigator.userAgent;
+
+    const formData = new URLSearchParams();
+    formData.append("email", emailInput.value);
+    formData.append("timestamp", document.getElementById("timestamp").value);
+    formData.append("user_agent", document.getElementById("user_agent").value);
+
     fetch(SCRIPT_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
-      body: "email=" + encodeURIComponent(emailInput.value),
+      body: formData.toString(),
     })
-      .then((res) => res.text())
-      .then((text) => {
+      .then(res => res.text())
+      .then(text => {
         if (text.includes("Success")) {
-          emailInput.value = "";
           form.reset();
           showSuccess();
+        } else {
+          alert("Submission failed. Please try again.");
         }
       })
       .catch(() => {
@@ -129,19 +139,13 @@
     }, 3000);
   }
 </script>
-<!-- UserWay config MUST be before loader -->
+
+<!-- UserWay config -->
 <script>
   window._userway_config = {
-    position: 'bottom-right',
-    offset: {
-      vertical: 20,
-      horizontal: 20
-    }
+    position: "bottom-right",
+    offset: { vertical: 20, horizontal: 20 }
   };
-</script>
-
-<script>
-!function(){ /* your existing UserWay loader script */ }();
 </script>
 
 <script>
