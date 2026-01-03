@@ -118,10 +118,15 @@
       },
       body: formData.toString(),
     })
-.then(text => {
-  alert(text); // TEMP: shows response source
-})
-
+      .then(res => res.text())
+      .then(text => {
+        if (text.includes("Success")) {
+          form.reset();
+          showSuccess();
+        } else {
+          alert("Submission failed. Please try again.");
+        }
+      })
       .catch(() => {
         alert("Submission failed. Please try again.");
       });
