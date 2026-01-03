@@ -105,57 +105,58 @@
   const SCRIPT_URL =
     "https://script.google.com/macros/s/AKfycbyRR2Spg97Yl5umF69Wfu3GBb57WyX0ObeeHLV9omWfyn9SSND2UkqhobLa_UoBl16U/exec";
 
-form.addEventListener("submit", function (e) {
-  e.preventDefault();
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
 
-  if (!form.checkValidity()) {
-    form.reportValidity();
-    return;
-  }
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
 
-  // Populate audit fields
-  document.getElementById("timestamp").value = new Date().toISOString();
-  document.getElementById("user_agent").value = navigator.userAgent;
+    // Populate audit fields
+    document.getElementById("timestamp").value = new Date().toISOString();
+    document.getElementById("user_agent").value = navigator.userAgent;
 
-  grecaptcha.ready(function () {
-  grecaptcha.execute(
-    "6Lcayz4sAAAAAFJKD_gtaVzvBdXWnNRBj5KX3B",
-    { action: "signup" }
-  ).then(function (token) {
-    submitForm(token);
-  });
-});
-
-function submitForm(recaptchaToken) {
-  const formData = new URLSearchParams();
-
-  formData.append("email", emailInput.value);
-  formData.append("timestamp", document.getElementById("timestamp").value);
-  formData.append("user_agent", document.getElementById("user_agent").value);
-  formData.append("captcha_token", recaptchaToken);
-  formData.append("consent_checkbox", "true");
-
-  fetch(SCRIPT_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: formData.toString(),
-  })
-    .then(res => res.text())
-    .then(text => {
-      if (text.includes("Success")) {
-        emailInput.value = "";
-        form.reset();
-        showSuccess();
-      } else {
-        alert("Verification failed. Please try again.");
-      }
-    })
-    .catch(() => {
-      alert("Submission failed. Please try again.");
+    grecaptcha.ready(function () {
+      grecaptcha.execute(
+        "6Lcayz4sAAAAAFJKD_gtaVzvBdXWnNRBj5KX3B",
+        { action: "signup" }
+      ).then(function (token) {
+        submitForm(token);
+      });
     });
-}
+  });
+
+  function submitForm(recaptchaToken) {
+    const formData = new URLSearchParams();
+
+    formData.append("email", emailInput.value);
+    formData.append("timestamp", document.getElementById("timestamp").value);
+    formData.append("user_agent", document.getElementById("user_agent").value);
+    formData.append("captcha_token", recaptchaToken);
+    formData.append("consent_checkbox", "true");
+
+    fetch(SCRIPT_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: formData.toString(),
+    })
+      .then((res) => res.text())
+      .then((text) => {
+        if (text.includes("Success")) {
+          emailInput.value = "";
+          form.reset();
+          showSuccess();
+        } else {
+          alert("Verification failed. Please try again.");
+        }
+      })
+      .catch(() => {
+        alert("Submission failed. Please try again.");
+      });
+  }
 
   function showSuccess() {
     successToast.style.display = "block";
@@ -164,6 +165,7 @@ function submitForm(recaptchaToken) {
     }, 3000);
   }
 </script>
+
 <!-- UserWay config MUST be before loader -->
 <script>
   window._userway_config = {
