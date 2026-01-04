@@ -86,14 +86,13 @@
 </footer>
 
 <div id="successToast">Successfully submitted</div>
-
 <script>
   const form = document.getElementById("signupForm");
   const emailInput = document.getElementById("email");
   const successToast = document.getElementById("successToast");
 
-  const SCRIPT_URL =
-    "https://script.google.com/macros/s/AKfycbzpgUEsGWUn-F4o8xJC__tjodD7Mf3wkO-y_ue4w967AvNh1tcvBJvcHCyY_NIJ5T9c/exec";
+  const WORKER_URL =
+    "https://tribal-ip-proxy.tribaloperations.workers.dev";
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
@@ -111,7 +110,7 @@
     formData.append("timestamp", document.getElementById("timestamp").value);
     formData.append("user_agent", document.getElementById("user_agent").value);
 
-    fetch(SCRIPT_URL, {
+    fetch(WORKER_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -120,7 +119,7 @@
     })
       .then(res => res.text())
       .then(text => {
-        if (text.includes("Success")) {
+        if (text.toLowerCase().includes("success")) {
           form.reset();
           showSuccess();
         } else {
@@ -139,6 +138,7 @@
     }, 3000);
   }
 </script>
+
 
 <!-- UserWay config -->
 <script>
