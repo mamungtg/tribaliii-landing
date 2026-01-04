@@ -112,7 +112,7 @@ form.addEventListener("submit", function (e) {
     ).then(function (token) {
 
       // DEBUG (keep for now)
-      
+      console.log("6LdDTj4sAAAAAK4Mvik32d2ljlf87pDxAwoMx32f", token);
 
       document.getElementById("captcha_token").value = token;
 
@@ -129,16 +129,15 @@ form.addEventListener("submit", function (e) {
         },
         body: formData.toString(),
       })
-	  .then(res => res.json())
-	  .then(data => {
-        if (data.success === true) {
-          form.reset();
-          showSuccess();
-        } else {
-          alert("Submission failed. Please try again.");
-        }
-      })
-
+        .then(res => res.text())
+        .then(text => {
+          if (text.toLowerCase().includes("success")) {
+            form.reset();
+            showSuccess();
+          } else {
+            alert("Submission failed. Please try again.");
+          }
+        })
         .catch(() => {
           alert("Submission failed. Please try again.");
         });
