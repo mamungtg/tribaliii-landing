@@ -114,13 +114,13 @@ form.addEventListener("submit", function (e) {
       // DEBUG (keep for now)
       console.log("6LdDTj4sAAAAAK4Mvik32d2ljlf87pDxAwoMx32f", token);
 
-      document.getElementById("captcha_token").value = token;
+      document.getElementById("6LdDTj4sAAAAAK4Mvik32d2ljlf87pDxAwoMx32f").value = token;
 
       const formData = new URLSearchParams();
       formData.append("email", emailInput.value);
       formData.append("timestamp", document.getElementById("timestamp").value);
       formData.append("user_agent", document.getElementById("user_agent").value);
-      formData.append("captcha_token", token);
+      formData.append("6LdDTj4sAAAAAK4Mvik32d2ljlf87pDxAwoMx32f", token);
 
       fetch(WORKER_URL, {
         method: "POST",
