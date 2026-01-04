@@ -108,42 +108,41 @@ form.addEventListener("submit", function (e) {
 
   grecaptcha.ready(function () {
     grecaptcha.execute(
-      "6LdDTj4sAAAAAK4Mvik32d2ljlf87pDxAwoMx32f",
+      "6Lc7J0AsAAAAAJzRVqWIvQbfzsfNKYmWxbpfSVOy",
       { action: "signup" }
-    ).then(function (token) {
+    )
+	.then(function (token) {
 
-      // DEBUG (keep for now)
-      console.log("6LdDTj4sAAAAAK4Mvik32d2ljlf87pDxAwoMx32f", token);
+  document.getElementById("captcha_token").value = token;
 
-      document.getElementById("6LdDTj4sAAAAAK4Mvik32d2ljlf87pDxAwoMx32f").value = token;
+  const formData = new URLSearchParams();
+  formData.append("email", emailInput.value);
+  formData.append("timestamp", document.getElementById("timestamp").value);
+  formData.append("user_agent", document.getElementById("user_agent").value);
+  formData.append("captcha_token", token);
 
-      const formData = new URLSearchParams();
-      formData.append("email", emailInput.value);
-      formData.append("timestamp", document.getElementById("timestamp").value);
-      formData.append("user_agent", document.getElementById("user_agent").value);
-      formData.append("6LdDTj4sAAAAAK4Mvik32d2ljlf87pDxAwoMx32f", token);
-
-      fetch(WORKER_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: formData.toString(),
-      })
-        .then(res => res.text())
-        .then(text => {
-          if (text.toLowerCase().includes("success")) {
-            form.reset();
-            showSuccess();
-          } else {
-            alert("Submission failed. Please try again.");
-          }
-        })
-        .catch(() => {
-          alert("Submission failed. Please try again.");
-        });
-
+  fetch(WORKER_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: formData.toString(),
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success === true) {
+        form.reset();
+        showSuccess();
+      } else {
+        alert("Submission failed. Please try again.");
+      }
+    })
+    .catch(() => {
+      alert("Submission failed. Please try again.");
     });
+
+});
+
   });
 });
 
@@ -172,6 +171,6 @@ function showSuccess() {
     (d.body || d.head).appendChild(s);
   })(document);
 </script>
-<script src="https://www.google.com/recaptcha/api.js?render=6LdDTj4sAAAAAK4Mvik32d2ljlf87pDxAwoMx32f"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6Lc7J0AsAAAAAJzRVqWIvQbfzsfNKYmWxbpfSVOy"></script>
 </body>
 </html>
