@@ -87,56 +87,71 @@
 
 <div id="successToast">Successfully submitted</div>
 <script>
-  const form = document.getElementById("signupForm");
-  const emailInput = document.getElementById("email");
-  const successToast = document.getElementById("successToast");
+const form = document.getElementById("signupForm");
+const emailInput = document.getElementById("email");
+const successToast = document.getElementById("successToast");
 
-  const WORKER_URL =
-    "https://tribal-ip-proxy.tribaloperations.workers.dev";
+const WORKER_URL =
+  "https://tribal-ip-proxy.tribaloperations.workers.dev";
 
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
 
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      return;
-    }
-
-    document.getElementById("timestamp").value = new Date().toISOString();
-    document.getElementById("user_agent").value = navigator.userAgent;
-
-    const formData = new URLSearchParams();
-    formData.append("email", emailInput.value);
-    formData.append("timestamp", document.getElementById("timestamp").value);
-    formData.append("user_agent", document.getElementById("user_agent").value);
-
-    fetch(WORKER_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: formData.toString(),
-    })
-      .then(res => res.text())
-      .then(text => {
-        if (text.toLowerCase().includes("success")) {
-          form.reset();
-          showSuccess();
-        } else {
-          alert("Submission failed. Please try again.");
-        }
-      })
-      .catch(() => {
-        alert("Submission failed. Please try again.");
-      });
-  });
-
-  function showSuccess() {
-    successToast.style.display = "block";
-    setTimeout(() => {
-      successToast.style.display = "none";
-    }, 3000);
+  if (!form.checkValidity()) {
+    form.reportValidity();
+    return;
   }
+
+  document.getElementById("timestamp").value = new Date().toISOString();
+  document.getElementById("user_agent").value = navigator.userAgent;
+
+  grecaptcha.ready(function () {
+    grecaptcha.execute(
+      "6LdDTj4sAAAAAK4Mvik32d2ljlf87pDxAwoMx32f",
+      { action: "signup" }
+    ).then(function (token) {
+
+      // DEBUG (keep for now)
+      console.log("reCAPTCHA token:", token);
+
+      document.getElementById("captcha_token").value = token;
+
+      const formData = new URLSearchParams();
+      formData.append("email", emailInput.value);
+      formData.append("timestamp", document.getElementById("timestamp").value);
+      formData.append("user_agent", document.getElementById("user_agent").value);
+      formData.append("captcha_token", token);
+
+      fetch(WORKER_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: formData.toString(),
+      })
+        .then(res => res.text())
+        .then(text => {
+          if (text.toLowerCase().includes("success")) {
+            form.reset();
+            showSuccess();
+          } else {
+            alert("Submission failed. Please try again.");
+          }
+        })
+        .catch(() => {
+          alert("Submission failed. Please try again.");
+        });
+
+    });
+  });
+});
+
+function showSuccess() {
+  successToast.style.display = "block";
+  setTimeout(() => {
+    successToast.style.display = "none";
+  }, 3000);
+}
 </script>
 
 
@@ -156,6 +171,6 @@
     (d.body || d.head).appendChild(s);
   })(document);
 </script>
-
+<script src="https://www.google.com/recaptcha/api.js?render=6LdDTj4sAAAAAK4Mvik32d2ljlf87pDxAwoMx32f"></script>
 </body>
 </html>
