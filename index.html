@@ -103,44 +103,53 @@ form.addEventListener("submit", function (e) {
     return;
   }
 
+  // Set metadata
   document.getElementById("timestamp").value = new Date().toISOString();
   document.getElementById("user_agent").value = navigator.userAgent;
 
+  // Run reCAPTCHA v3
   grecaptcha.ready(function () {
     grecaptcha.execute(
       "6Lc7J0AsAAAAAJzRVqWIvQbfzsfNKYmWxbpfSVOy",
       { action: "signup" }
-    )
-	.then(function (token) {
+    ).then(function (token) {
 
-  document.getElementById("captcha_token").value = token;
+      document.getElementById("captcha_token").value = token;
 
-  const formData = new URLSearchParams();
-  formData.append("email", emailInput.value);
-  formData.append("timestamp", document.getElementById("timestamp").value);
-  formData.append("user_agent", document.getElementById("user_agent").value);
-  formData.append("captcha_token", token);
+      const formData = new URLSearchParams();
+      formData.append("email", emailInput.value);
+      formData.append("timestamp", document.getElementById("timestamp").value);
+      formData.append("user_agent", document.getElementById("user_agent").value);
+      formData.append("captcha_token", token);
+      formData.append("consent_email", "true");
+      formData.append("consent_terms", "true");
+      formData.append("age_confirmed", "true");
 
-  fetch(WORKER_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: formData.toString(),
-  })
-    .then(res => res.json())
-    .then(data => {
-      if (data.success === true) {
-        form.reset();
-        showSuccess();
-      } else {
-        alert("Submission failed. Please try again.");
-      }
-    })
-    .catch(() => {
-      alert("Submission failed. Please try again.");
+      fetch(WORKER_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: formData.toString(),
+      })
+        .then(res => {
+          if (!res.ok) throw new Error("Network error");
+          return res.json();
+        })
+        .then(data => {
+          if (data.success === true) {
+            form.reset();
+            showSuccess();
+          } else {
+            alert("Submission failed. Please try again.");
+          }
+        })
+        .catch(() => {
+          alert("Submission failed. Please try again.");
+        });
+
     });
-
+  });
 });
 
 function showSuccess() {
@@ -150,6 +159,7 @@ function showSuccess() {
   }, 3000);
 }
 </script>
+
 
 
 <!-- UserWay config -->
