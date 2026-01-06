@@ -39,9 +39,10 @@
 
 .checkbox-group.tiny input[type="checkbox"] {
   transform: scale(0.85);
-  margin-top: 3px;           /* precise visual alignment */
+  margin-top: 1px;        /* KEY FIX */
   flex-shrink: 0;
 }
+
 
 /* =========================
    Email consent block
