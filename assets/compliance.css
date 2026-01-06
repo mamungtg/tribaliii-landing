@@ -40,9 +40,25 @@
 
 .checkbox-group.tiny .email-consent span {
   display: block;
-  max-width: 420px;         /* FIX: cleaner line length */
-  opacity: 0.95;
+  max-width: 420px;
+  font-size: 9px;
+  line-height: 1.45;
+  color: #cfcfcf;
 }
+
+/* De-emphasize the lines after the main sentence */
+.checkbox-group.tiny .email-consent span br {
+  content: "";
+  display: block;
+  margin-top: 4px;
+}
+
+.checkbox-group.tiny .email-consent span br + * {
+  font-size: 9px;
+  color: #9a9a9a;
+  line-height: 1.5;
+}
+
 
 
 
