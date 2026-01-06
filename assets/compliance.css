@@ -74,14 +74,6 @@
 
 
 
-/* Permission / legal text below checkboxes */
-.permission-text {
-  font-size: 9px;           /* smaller than checkbox text */
-  line-height: 1.5;
-  color: #9a9a9a;
-  max-width: 360px;
-  margin: 12px auto 0;
-}
 
 
 /* =========================
